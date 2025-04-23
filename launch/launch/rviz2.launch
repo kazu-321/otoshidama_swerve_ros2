@@ -1,0 +1,6 @@
+<launch>
+    <node
+        pkg="rviz2"
+        exec="rviz2"
+        args="-d $(find-pkg-share otoshidama_swerve_launch)/rviz/otoshidama_swerve.rviz"/>
+</launch>
