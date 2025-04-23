@@ -117,9 +117,6 @@ namespace otoshidama_swerve_visualization {
         twist.twist.angular.z = x[2];
     
         twist_pub_->publish(twist);
-        RCLCPP_INFO(this->get_logger(), "x: %.3f, y: %.3f, z: %.3f",
-                    x[0], x[1], x[2]);
-        
     }
 } // namespace otoshidama_swerve_visualization
 
