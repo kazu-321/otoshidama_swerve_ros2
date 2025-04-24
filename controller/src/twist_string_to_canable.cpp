@@ -1,12 +1,14 @@
-#include "otoshidama_swerve_controller/twist_to_canable.hpp"
+#include "otoshidama_swerve_controller/twist_string_to_canable.hpp"
 
 namespace otoshidama_swerve_controller {
-    twist_to_canable::twist_to_canable(const rclcpp::NodeOptions & options)
-    : Node("twist_to_canable", options)
+    twist_string_to_canable::twist_string_to_canable(const rclcpp::NodeOptions & options)
+    : Node("twist_string_to_canable", options)
     {
         canable_pub_ = this->create_publisher<canable_msgs::msg::Can>("/can/transmit", 10);
         twist_sub_ = this->create_subscription<geometry_msgs::msg::Twist>(
-            "cmd_vel", 10, std::bind(&twist_to_canable::twist_callback, this, std::placeholders::_1));
+            "cmd_vel", 10, std::bind(&twist_string_to_canable::twist_callback, this, std::placeholders::_1));
+        string_sub_ = this->create_subscription<std_msgs::msg::String>(
+            "cmd", 10, std::bind(&twist_string_to_canable::string_callback, this, std::placeholders::_1));
         canmsg.data.emg = 0;
         canmsg.data.reset = 0;
         canmsg.x = 0.0;
@@ -15,7 +17,17 @@ namespace otoshidama_swerve_controller {
         canmsg.data.reserved = 0;
     }
 
-    void twist_to_canable::twist_callback(const geometry_msgs::msg::Twist::SharedPtr msg) {
+    void twist_string_to_canable::string_callback(const std_msgs::msg::String::SharedPtr msg) {
+        if (msg->data == "continue") {
+            canmsg.data.emg = 0;
+        } else if( msg->data == "pause") {
+            canmsg.data.emg = 1;
+        } else if (msg->data == "reset") {
+            canmsg.data.reset = 1;
+        }
+    }
+
+    void twist_string_to_canable::twist_callback(const geometry_msgs::msg::Twist::SharedPtr msg) {
         canmsg.data.emg = 0;
         canmsg.data.reset = 0;
         canmsg.x = msg->linear.x;
@@ -42,4 +54,4 @@ namespace otoshidama_swerve_controller {
 };
 
 #include <rclcpp_components/register_node_macro.hpp>
-RCLCPP_COMPONENTS_REGISTER_NODE(otoshidama_swerve_controller::twist_to_canable)
+RCLCPP_COMPONENTS_REGISTER_NODE(otoshidama_swerve_controller::twist_string_to_canable)

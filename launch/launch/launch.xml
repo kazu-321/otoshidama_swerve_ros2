@@ -1,7 +1,7 @@
 <launch>
   <node_container pkg="rclcpp_components" exec="component_container" name="otoshidama_swerve_container" namespace="" args="test_args">
     <composable_node pkg="canable" plugin="canable::canable_node" name="canable_node"/>
-    <composable_node pkg="otoshidama_swerve_controller" plugin="otoshidama_swerve_controller::twist_to_canable" name="twist_to_canable"/>
+    <composable_node pkg="otoshidama_swerve_controller" plugin="otoshidama_swerve_controller::twist_string_to_canable" name="twist_string_to_canable"/>
     <composable_node pkg="otoshidama_swerve_visualization" plugin="otoshidama_swerve_visualization::visualize_swerve" name="visualize_swerve"/>
   </node_container>
 </launch>

@@ -13,8 +13,8 @@ target_include_directories(${PROJECT_NAME}
 )
 
 rclcpp_components_register_node(${PROJECT_NAME}
-    PLUGIN "otoshidama_swerve_controller::twist_to_canable"
-    EXECUTABLE twist_to_canable
+    PLUGIN "otoshidama_swerve_controller::twist_string_to_canable"
+    EXECUTABLE twist_string_to_canable
 )
 
 ament_auto_package(
