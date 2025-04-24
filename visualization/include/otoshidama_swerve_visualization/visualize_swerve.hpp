@@ -26,6 +26,7 @@ namespace otoshidama_swerve_visualization {
         };
 
         float angle[4] = {0.0, 0.0, 0.0, 0.0};
+        float last_angle[4] = {0.0, 0.0, 0.0, 0.0};
         float speed[4] = {0.0, 0.0, 0.0, 0.0};
 
         void visualize_swerve_callback(const canable_msgs::msg::Can::SharedPtr msg);
