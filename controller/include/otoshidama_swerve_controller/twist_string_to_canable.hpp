@@ -17,6 +17,7 @@ namespace otoshidama_swerve_controller {
         rclcpp::Publisher<canable_msgs::msg::Can>::SharedPtr canable_pub_;
         rclcpp::Subscription<geometry_msgs::msg::Twist>::SharedPtr twist_sub_;
         rclcpp::Subscription<std_msgs::msg::String>::SharedPtr string_sub_;
+        rclcpp::TimerBase::SharedPtr timer_;
 
         struct canmsg_s {
             struct {

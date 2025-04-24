@@ -9,6 +9,14 @@ namespace otoshidama_swerve_controller {
             "cmd_vel", 10, std::bind(&twist_string_to_canable::twist_callback, this, std::placeholders::_1));
         string_sub_ = this->create_subscription<std_msgs::msg::String>(
             "cmd", 10, std::bind(&twist_string_to_canable::string_callback, this, std::placeholders::_1));
+        timer_ = this->create_wall_timer(
+            std::chrono::milliseconds(300), [this]() {
+                canable_msgs::msg::Can can_msg;
+                can_msg.id = 0x001;
+                can_msg.dlc = 1;
+                memcpy(&can_msg.data, &canmsg.data, sizeof(canmsg.data));
+                canable_pub_->publish(can_msg);
+            });
         canmsg.data.emg = 0;
         canmsg.data.reset = 0;
         canmsg.x = 0.0;
@@ -28,8 +36,6 @@ namespace otoshidama_swerve_controller {
     }
 
     void twist_string_to_canable::twist_callback(const geometry_msgs::msg::Twist::SharedPtr msg) {
-        canmsg.data.emg = 0;
-        canmsg.data.reset = 0;
         canmsg.x = msg->linear.x;
         canmsg.y = msg->linear.y;
         canmsg.z = msg->angular.z;
