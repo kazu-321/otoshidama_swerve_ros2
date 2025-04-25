@@ -45,6 +45,7 @@ namespace otoshidama_swerve_controller {
         can_msg.dlc = 1;
         memcpy(&can_msg.data, &canmsg.data, sizeof(canmsg.data));
         canable_pub_->publish(can_msg);
+        canmsg.data.reset = 0;
 
         can_msg.id = 0x001;
         can_msg.dlc = 8;
