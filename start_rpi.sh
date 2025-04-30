@@ -8,4 +8,4 @@ done
 
 sleep 3
 
-tmux new-session -d -s otoshidama "otoshidama"
+tmux new-session -d -s otoshidama "ros2 launch otoshidama_swerve_launch container.xml"
